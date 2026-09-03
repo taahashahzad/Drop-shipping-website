@@ -1,0 +1,2 @@
+order_reference_id,customer_name,Address,delivery_city,delivery_country,customer_phone_number,product_sku,Quantity,price,shipping_charges,Discount,total_amount,currency,payment_mode
+ORDER-1001,Ahmed Al Saud,King Fahd Rd,Dubai,United Arab Emirates,971501234567,ZAM,2,50,10,5,104.98,AED,COD
