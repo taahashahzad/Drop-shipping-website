@@ -115,7 +115,12 @@ export default function ProductDetails() {
             )}
           </div>
 
-          {product.description && <p className="mt-6 text-sm leading-relaxed text-ink-soft">{product.description}</p>}
+          {product.description && (
+            <section className="mt-7 border-y border-ink/8 py-6" aria-labelledby="product-description-title">
+              <p id="product-description-title" className="eyebrow text-palm-600">About this product</p>
+              <p className="mt-3 whitespace-pre-line text-base font-medium leading-8 text-ink-soft">{product.description}</p>
+            </section>
+          )}
 
           {variants.length > 0 && (
             <div className="mt-7">
