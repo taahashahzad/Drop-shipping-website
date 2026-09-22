@@ -71,7 +71,15 @@ export default function Checkout() {
         currency: settings.currency,
       })
       clearCart()
-      navigate(`/order-confirmation/${order.order_reference}`, { state: { order } })
+      navigate(`/order-confirmation/${order.order_reference}`, {
+        state: {
+          order: {
+            ...order,
+            delivery_city: order.delivery_city || form.city,
+            total_amount: Number(order.total_amount ?? total),
+          },
+        },
+      })
     } catch (err) {
       toast.error(err.message || 'Could not place order. Please try again.')
     } finally {
