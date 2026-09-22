@@ -24,9 +24,14 @@ export const STATUS_LABELS = {
 
 // cartItems: [{ product, variant, quantity }]
 export async function placeOrder({ customer, cartItems, subtotal, shippingCharges, discount, total, currency = 'AED' }) {
-  const { data: order, error: orderError } = await supabase
+  const orderId = crypto.randomUUID()
+  const orderReference = `ORDER-${Date.now()}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`
+
+  const { error: orderError } = await supabase
     .from('orders')
     .insert({
+      id: orderId,
+      order_reference: orderReference,
       customer_name: customer.fullName,
       customer_phone: customer.phone,
       customer_email: customer.email || null,
@@ -45,8 +50,6 @@ export async function placeOrder({ customer, cartItems, subtotal, shippingCharge
       payment_mode: 'COD',
       status: 'new',
     })
-    .select()
-    .single()
 
   if (orderError) throw orderError
 
@@ -54,7 +57,7 @@ export async function placeOrder({ customer, cartItems, subtotal, shippingCharge
     const unitPrice = item.variant?.price ?? item.product.price
     const sku = item.variant?.sku || item.product.sku
     return {
-      order_id: order.id,
+      order_id: orderId,
       product_id: item.product.id,
       variant_id: item.variant?.id || null,
       product_name: item.product.name,
@@ -68,7 +71,7 @@ export async function placeOrder({ customer, cartItems, subtotal, shippingCharge
   const { error: itemsError } = await supabase.from('order_items').insert(items)
   if (itemsError) throw itemsError
 
-  return order
+  return { id: orderId, order_reference: orderReference }
 }
 
 export async function getOrders({
