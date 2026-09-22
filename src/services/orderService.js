@@ -71,7 +71,12 @@ export async function placeOrder({ customer, cartItems, subtotal, shippingCharge
   const { error: itemsError } = await supabase.from('order_items').insert(items)
   if (itemsError) throw itemsError
 
-  return { id: orderId, order_reference: orderReference }
+  return {
+    id: orderId,
+    order_reference: orderReference,
+    delivery_city: customer.city,
+    total_amount: total,
+  }
 }
 
 export async function getOrders({
