@@ -142,7 +142,7 @@ export default function Orders() {
               <p><span className="text-ink/50">Customer:</span> {selected.customer_name}</p>
               <p><span className="text-ink/50">Phone:</span> {selected.customer_phone}</p>
               <p><span className="text-ink/50">Address:</span> {[selected.address_line, selected.building, selected.area].filter(Boolean).join(', ')}</p>
-              <p><span className="text-ink/50">City / Emirate:</span> {selected.delivery_city}{selected.emirate ? `, ${selected.emirate}` : ''}</p>
+              <p><span className="text-ink/50">City / Province:</span> {selected.delivery_city}{selected.emirate ? `, ${selected.emirate}` : ''}</p>
               {selected.delivery_notes && <p><span className="text-ink/50">Notes:</span> {selected.delivery_notes}</p>}
             </div>
 

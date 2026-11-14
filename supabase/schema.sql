@@ -1,5 +1,5 @@
 -- ============================================================================
--- UAE COD Dropshipping Store — Full Database Schema
+-- Pakistan COD Mithai Store — Full Database Schema
 -- Paste this entire file into Supabase → SQL Editor and run it once on a
 -- fresh project. Safe to re-run: uses IF NOT EXISTS / CREATE OR REPLACE.
 -- ============================================================================
@@ -56,19 +56,19 @@ create trigger trg_on_auth_user_created
 -- ---------------------------------------------------------------------------
 create table if not exists store_settings (
   id int primary key default 1,
-  store_name text not null default 'Your Store',
-  store_description text default 'Quality products delivered across the UAE. Cash on Delivery available.',
+  store_name text not null default 'Mithai Ghar',
+  store_description text default 'Homemade Pakistani mithai, prepared fresh and delivered with care.',
   logo_url text,
   favicon_url text,
   phone text,
   whatsapp text,
   email text,
   address text,
-  currency text not null default 'AED',
-  shipping_fee numeric(10,2) not null default 15,
-  free_shipping_threshold numeric(10,2) default 200,
+  currency text not null default 'PKR',
+  shipping_fee numeric(10,2) not null default 250,
+  free_shipping_threshold numeric(10,2) default 3000,
   cod_enabled boolean not null default true,
-  footer_text text default 'Cash on Delivery across the UAE. Genuine products, fast dispatch.',
+  footer_text text default 'Homemade mithai, freshly prepared and delivered across Pakistan.',
   social_instagram text,
   social_facebook text,
   social_tiktok text,
@@ -208,13 +208,13 @@ create table if not exists orders (
   area text,
   delivery_city text not null,
   emirate text,
-  delivery_country text not null default 'United Arab Emirates',
+  delivery_country text not null default 'Pakistan',
   delivery_notes text,
   subtotal numeric(10,2) not null default 0,
   shipping_charges numeric(10,2) not null default 0,
   discount numeric(10,2) not null default 0,
   total_amount numeric(10,2) not null default 0,
-  currency text not null default 'AED',
+  currency text not null default 'PKR',
   payment_mode text not null default 'COD',
   status text not null default 'new' check (
     status in ('new','confirmed','processing','exported_to_zambeel','shipped','delivered','cancelled','returned')
@@ -481,47 +481,47 @@ create policy "storage_staff_delete" on storage.objects
   );
 
 -- ============================================================================
--- SEED DATA — demo categories & products (admin can delete freely)
+-- SEED DATA — demo mithai categories & products (admin can delete freely)
 -- ============================================================================
 insert into categories (name, slug, description, is_active, sort_order) values
-  ('Electronics', 'electronics', 'Gadgets and everyday electronics.', true, 1),
-  ('Home & Kitchen', 'home-kitchen', 'Organizers and essentials for the home.', true, 2),
-  ('Accessories', 'accessories', 'Everyday carry and accessories.', true, 3)
+  ('Traditional Mithai', 'traditional-mithai', 'Classic Pakistani sweets made fresh in small batches.', true, 1),
+  ('Mithai Boxes', 'mithai-boxes', 'Assorted mithai boxes, made for sharing and gifting.', true, 2),
+  ('Festive Favourites', 'festive-favourites', 'Celebration sweets for every special occasion.', true, 3)
 on conflict (slug) do nothing;
 
 insert into products (name, slug, sku, description, category_id, price, compare_at_price, stock, is_active, is_featured, specifications)
-select 'Wireless Earbuds', 'wireless-earbuds', 'WE-1001',
-  'Compact true-wireless earbuds with a 24-hour charging case and clear call quality.',
-  (select id from categories where slug = 'electronics'), 89.00, 129.00, 40, true, true,
-  '{"Battery":"24h with case","Bluetooth":"5.3","Water resistance":"IPX4"}'::jsonb
-where not exists (select 1 from products where sku = 'WE-1001');
+select 'Gulab Jamun Box', 'gulab-jamun-box', 'MG-1001',
+  'Soft, golden gulab jamun soaked in fragrant sugar syrup. Prepared fresh for your order.',
+  (select id from categories where slug = 'traditional-mithai'), 1200.00, 1400.00, 40, true, true,
+  '{"Pack size":"1 kg","Made":"Fresh to order","Serving suggestion":"Serve warm"}'::jsonb
+where not exists (select 1 from products where sku = 'MG-1001');
 
 insert into products (name, slug, sku, description, category_id, price, compare_at_price, stock, is_active, is_featured, specifications)
-select 'LED Desk Lamp', 'led-desk-lamp', 'LDL-1002',
-  'Adjustable desk lamp with 3 brightness levels and USB charging port.',
-  (select id from categories where slug = 'home-kitchen'), 59.00, 79.00, 25, true, true,
-  '{"Power":"USB-C","Modes":"3","Material":"Aluminium"}'::jsonb
-where not exists (select 1 from products where sku = 'LDL-1002');
+select 'Fresh Jalebi', 'fresh-jalebi', 'MG-1002',
+  'Crisp, golden jalebi with a delicate sugar syrup centre. Best enjoyed fresh.',
+  (select id from categories where slug = 'traditional-mithai'), 800.00, 950.00, 25, true, true,
+  '{"Pack size":"1 kg","Made":"Fresh to order","Serving suggestion":"Enjoy fresh"}'::jsonb
+where not exists (select 1 from products where sku = 'MG-1002');
 
 insert into products (name, slug, sku, description, category_id, price, compare_at_price, stock, is_active, is_featured, specifications)
-select 'Travel Organizer', 'travel-organizer', 'TO-1003',
-  'Compact packing organizer set for cables, chargers and toiletries.',
-  (select id from categories where slug = 'accessories'), 45.00, null, 60, true, false,
-  '{"Pieces":"4","Material":"Polyester"}'::jsonb
-where not exists (select 1 from products where sku = 'TO-1003');
+select 'Mixed Mithai Box', 'mixed-mithai-box', 'MG-1003',
+  'A colourful assortment of traditional favourites, carefully packed for sharing.',
+  (select id from categories where slug = 'mithai-boxes'), 1800.00, null, 60, true, true,
+  '{"Pack size":"1 kg","Made":"Fresh to order","Packaging":"Gift-ready box"}'::jsonb
+where not exists (select 1 from products where sku = 'MG-1003');
 
 insert into products (name, slug, sku, description, category_id, price, compare_at_price, stock, is_active, is_featured, specifications)
-select 'Phone Stand', 'phone-stand', 'PS-1004',
-  'Foldable aluminium phone and tablet stand, adjustable to any angle.',
-  (select id from categories where slug = 'accessories'), 25.00, 35.00, 100, true, false,
-  '{"Material":"Aluminium","Foldable":"Yes"}'::jsonb
-where not exists (select 1 from products where sku = 'PS-1004');
+select 'Kaju Katli', 'kaju-katli', 'MG-1004',
+  'Delicate cashew and cardamom mithai, cut into diamond-shaped pieces.',
+  (select id from categories where slug = 'festive-favourites'), 2200.00, null, 100, true, false,
+  '{"Pack size":"1 kg","Made":"Fresh to order","Packaging":"Gift-ready box"}'::jsonb
+where not exists (select 1 from products where sku = 'MG-1004');
 
 insert into products (name, slug, sku, description, category_id, price, compare_at_price, stock, is_active, is_featured, specifications)
-select 'Kitchen Organizer Set', 'kitchen-organizer-set', 'KOS-1005',
-  'Stackable kitchen organizer set for pantry and counter storage.',
-  (select id from categories where slug = 'home-kitchen'), 69.00, null, 30, true, true,
-  '{"Pieces":"6","Material":"BPA-free plastic"}'::jsonb
-where not exists (select 1 from products where sku = 'KOS-1005');
+select 'Pistachio Barfi', 'pistachio-barfi', 'MG-1005',
+  'Creamy milk barfi finished with pistachio for a little extra crunch.',
+  (select id from categories where slug = 'festive-favourites'), 1600.00, null, 30, true, true,
+  '{"Pack size":"1 kg","Made":"Fresh to order","Packaging":"Gift-ready box"}'::jsonb
+where not exists (select 1 from products where sku = 'MG-1005');
 
 -- Done. Your database is ready.

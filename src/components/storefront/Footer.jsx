@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Truck, ShieldCheck, RotateCcw, Phone, ArrowRight } from 'lucide-react'
+import { Truck, ShieldCheck, Heart, Phone, ArrowRight } from 'lucide-react'
 import { useStoreSettings } from '../../contexts/StoreSettingsContext'
 import { useToast } from '../../contexts/ToastContext'
 
@@ -44,13 +44,13 @@ export default function Footer() {
         </div>
         <div className="flex flex-col gap-2.5">
           <ShieldCheck size={20} className="text-palm-300" />
-          <p className="text-sm font-medium text-white">Genuine products</p>
-          <p className="text-xs text-paper/50">Quality checked before every dispatch</p>
+          <p className="text-sm font-medium text-white">Made fresh in small batches</p>
+          <p className="text-xs text-paper/50">Traditional sweets prepared with care</p>
         </div>
         <div className="flex flex-col gap-2.5">
-          <RotateCcw size={20} className="text-palm-300" />
-          <p className="text-sm font-medium text-white">Easy returns</p>
-          <p className="text-xs text-paper/50">Hassle-free return policy</p>
+          <Heart size={20} className="text-palm-300" />
+          <p className="text-sm font-medium text-white">Packed with love</p>
+          <p className="text-xs text-paper/50">A little sweetness in every box</p>
         </div>
         <div className="flex flex-col gap-2.5">
           <Phone size={20} className="text-palm-300" />
@@ -63,7 +63,9 @@ export default function Footer() {
         <div className="container-store grid gap-10 py-12 lg:grid-cols-[1.3fr_1fr_1fr]">
           <div>
             <h3 className="font-display text-2xl text-white">{settings.store_name}</h3>
-            <p className="mt-3 max-w-sm text-sm text-paper/55">{settings.store_description}</p>
+            <p className="mt-3 max-w-sm text-sm text-paper/55">
+              Homemade Pakistani mithai, prepared fresh in small batches and delivered with care.
+            </p>
             <div className="mt-5 flex gap-3">
               {settings.social_instagram && (
                 <a href={settings.social_instagram} target="_blank" rel="noreferrer" className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-paper/70 hover:border-white/40 hover:text-white">

@@ -61,7 +61,7 @@ export function buildZambeelRows(orders) {
         customer_name: order.customer_name,
         Address: buildFullAddress(order),
         delivery_city: order.delivery_city,
-        delivery_country: order.delivery_country || 'United Arab Emirates',
+        delivery_country: order.delivery_country || 'Pakistan',
         customer_phone_number: order.customer_phone,
         product_sku: item.product_sku,
         Quantity: item.quantity,
@@ -69,7 +69,7 @@ export function buildZambeelRows(orders) {
         shipping_charges: index === 0 ? Number(order.shipping_charges || 0) : 0,
         Discount: index === 0 ? Number(order.discount || 0) : 0,
         total_amount: index === 0 ? Number(order.total_amount) : 0,
-        currency: order.currency || 'AED',
+        currency: order.currency || 'PKR',
         payment_mode: order.payment_mode || 'COD',
       })
     })

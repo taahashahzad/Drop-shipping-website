@@ -40,7 +40,7 @@ export default function Header() {
             <div key={i} className="flex flex-shrink-0 gap-16">
               {Array.from({ length: 4 }).map((__, j) => (
                 <span key={j} className="flex items-center gap-2">
-                  <Truck size={12} /> Cash on Delivery available across the UAE
+                  <Truck size={12} /> Homemade mithai delivered across Pakistan · Cash on Delivery available
                 </span>
               ))}
             </div>

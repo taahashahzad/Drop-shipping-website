@@ -278,7 +278,7 @@ export default function ProductForm() {
             <textarea className="input" rows={3} value={form.description} onChange={(e) => set('description', e.target.value)} />
           </div>
           <div>
-            <label className="label">Price (AED)</label>
+            <label className="label">Price (PKR)</label>
             <input className="input" type="number" step="0.01" min="0" required value={form.price} onChange={(e) => set('price', e.target.value)} />
           </div>
           <div>
@@ -402,7 +402,7 @@ export default function ProductForm() {
                 <div>
                   <p className="text-sm font-medium text-ink">{v.name}</p>
                   <p className="text-xs text-ink/50">
-                    SKU {v.sku} · {v.price ? `AED ${v.price}` : 'Base price'} · Stock {v.stock}
+                    SKU {v.sku} · {v.price ? `PKR ${v.price}` : 'Base price'} · Stock {v.stock}
                   </p>
                 </div>
                 <div className="flex gap-2 flex-shrink-0">

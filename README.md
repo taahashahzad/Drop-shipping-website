@@ -1,8 +1,8 @@
-# Your Store — UAE COD Dropshipping Storefront
+# Mithai Ghar — Pakistani Homemade Mithai Store
 
-A generic, niche-agnostic e-commerce storefront built for Cash on Delivery
-sales across the UAE, with a full admin dashboard and a dedicated Zambeel
-Excel export workflow.
+A homemade mithai storefront for customers across Pakistan, with Cash on
+Delivery checkout, a full admin dashboard, and a dedicated Zambeel Excel
+export workflow.
 
 ## Tech stack
 React 18 · Vite · Supabase (Postgres, Auth, Storage) · Tailwind CSS ·
@@ -19,6 +19,11 @@ Lucide React · SheetJS (xlsx) · Recharts · React Router
    full admin access via RLS.
 4. Go to **Project Settings → API** and copy your **Project URL** and
    **anon public key**.
+
+If Supabase was already configured for another store, update its existing
+product and category records to mithai in the admin dashboard. The demo seed
+data is only added when a fresh database is initialized and does not replace
+existing catalog records.
 
 ## 2. Configure the app
 
@@ -70,7 +75,7 @@ src/
                      zambeelExport.js   ← isolated Zambeel logic
 supabase/
   schema.sql              full database schema + RLS + seed data
-  UAE-sample-orders.csv   structural reference for the Zambeel format
+  Pakistan-sample-orders.csv   structural reference for the Zambeel format
 ```
 
 ## How the Zambeel export works

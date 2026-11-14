@@ -1,26 +1,18 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react'
-import { getStoreSettings } from '../services/settingsService'
+import { getStoreSettings, normalizeStoreSettings } from '../services/settingsService'
 
 const StoreSettingsContext = createContext(null)
 
-const DEFAULTS = {
-  store_name: 'Your Store',
-  store_description: 'Quality products delivered across the UAE. Cash on Delivery available.',
-  currency: 'AED',
-  shipping_fee: 15,
-  free_shipping_threshold: 200,
-  cod_enabled: true,
-}
-
 export function StoreSettingsProvider({ children }) {
-  const [settings, setSettings] = useState(DEFAULTS)
+  const [settings, setSettings] = useState(() => normalizeStoreSettings())
   const [loading, setLoading] = useState(true)
 
   const refresh = useCallback(async () => {
     try {
       const data = await getStoreSettings()
-      setSettings(data)
-      if (data?.store_name) document.title = data.store_name
+      const storeSettings = normalizeStoreSettings(data)
+      setSettings(storeSettings)
+      if (storeSettings.store_name) document.title = storeSettings.store_name
       if (data?.favicon_url) {
         const link = document.querySelector("link[rel='icon']")
         if (link) link.href = data.favicon_url

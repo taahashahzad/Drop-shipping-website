@@ -23,7 +23,7 @@ export const STATUS_LABELS = {
 }
 
 // cartItems: [{ product, variant, quantity }]
-export async function placeOrder({ customer, cartItems, subtotal, shippingCharges, discount, total, currency = 'AED' }) {
+export async function placeOrder({ customer, cartItems, subtotal, shippingCharges, discount, total, currency = 'PKR' }) {
   const orderId = crypto.randomUUID()
   const orderReference = `ORDER-${Date.now()}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`
 
@@ -39,8 +39,8 @@ export async function placeOrder({ customer, cartItems, subtotal, shippingCharge
       building: customer.building || null,
       area: customer.area || null,
       delivery_city: customer.city,
-      emirate: customer.emirate || null,
-      delivery_country: 'United Arab Emirates',
+      emirate: customer.province || null,
+      delivery_country: 'Pakistan',
       delivery_notes: customer.notes || null,
       subtotal,
       shipping_charges: shippingCharges,

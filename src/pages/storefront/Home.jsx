@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Truck, ShieldCheck, Banknote, Clock, ArrowRight, ArrowUpRight } from 'lucide-react'
+import { ShieldCheck, Banknote, Clock, ArrowRight, ArrowUpRight } from 'lucide-react'
 import { getProducts } from '../../services/productService'
 import { getActiveCategories } from '../../services/categoryService'
 import ProductCard from '../../components/ProductCard'
 import Reveal from '../../components/Reveal'
 import { ProductGridSkeleton } from '../../components/Skeletons'
 import { useStoreSettings } from '../../contexts/StoreSettingsContext'
+import { formatMoney } from '../../utils/format'
 
 export default function Home() {
   const settings = useStoreSettings()
@@ -29,8 +30,8 @@ export default function Home() {
       {/* Hero */}
       <section className="relative isolate flex min-h-[560px] items-center overflow-hidden sm:min-h-[640px]">
         <img
-          src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=2400&auto=format&fit=crop"
-          alt=""
+          src="https://images.unsplash.com/photo-1758910536889-43ce7b3199fd?auto=format&fit=crop&w=2400&h=1200&q=85"
+          alt="An assortment of traditional mithai displayed at a sweet shop"
           className="absolute inset-0 -z-10 h-full w-full scale-105 object-cover"
         />
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink/85 via-ink/55 to-ink/20" />
@@ -39,30 +40,30 @@ export default function Home() {
         <div className="container-store relative py-20 sm:py-0">
           <div className="max-w-xl animate-fadeUp">
             <span className="eyebrow mb-6 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sand-100 backdrop-blur-sm">
-              Delivering across the UAE
+              Handmade mithai, delivered across Pakistan
             </span>
             <h1 className="font-display text-[2.75rem] font-medium leading-[1.05] text-white sm:text-6xl lg:text-[3.5rem]">
-              Shop today,
+              Fresh mithai,
               <br />
-              pay at your door.
+              made with love.
             </h1>
             <p className="mt-6 max-w-md text-base leading-relaxed text-white/80">
-              {settings.store_description}
+              From warm gulab jamun to crisp jalebi, every box is prepared in small batches with the care of a home kitchen—and delivered fresh across Pakistan.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Link to="/shop" className="btn bg-white text-palm-700 hover:bg-sand-100">
-                Start shopping <ArrowRight size={16} />
+                Order fresh mithai <ArrowRight size={16} />
               </Link>
               <Link to="/shop" className="btn border border-white/30 text-white hover:bg-white/10">
-                Browse categories
+                Explore mithai
               </Link>
             </div>
 
             <div className="mt-14 flex flex-wrap gap-x-10 gap-y-4 border-t border-white/15 pt-7">
               {[
                 { icon: Banknote, label: 'Cash on Delivery' },
-                { icon: ShieldCheck, label: 'Genuine products' },
-                { icon: Clock, label: 'Fast dispatch' },
+                { icon: ShieldCheck, label: 'Made fresh in small batches' },
+                { icon: Clock, label: 'Packed with care' },
               ].map(({ icon: Icon, label }) => (
                 <div key={label} className="flex items-center gap-2 text-sm text-white/80">
                   <Icon size={16} /> {label}
@@ -92,11 +93,11 @@ export default function Home() {
 
       {/* Categories */}
       {categories.length > 0 && (
-        <section className="container-store py-20">
+        <section id="mithai-categories" className="container-store py-20">
           <Reveal className="mb-8 flex items-end justify-between">
             <div>
-              <p className="eyebrow text-palm-600">Browse</p>
-              <h2 className="mt-2 text-3xl font-medium">Shop by category</h2>
+              <p className="eyebrow text-palm-600">Made for sharing</p>
+              <h2 className="mt-2 text-3xl font-medium">Find your favourite mithai</h2>
             </div>
           </Reveal>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
@@ -129,8 +130,8 @@ export default function Home() {
       <section className="container-store py-8">
         <Reveal className="mb-8 flex items-end justify-between">
           <div>
-            <p className="eyebrow text-palm-600">Handpicked</p>
-            <h2 className="mt-2 text-3xl font-medium">Featured products</h2>
+            <p className="eyebrow text-palm-600">Made with care</p>
+            <h2 className="mt-2 text-3xl font-medium">Our signature mithai</h2>
           </div>
           <Link to="/shop" className="link-underline hidden text-sm font-medium text-palm-600 sm:inline-block">
             View all
@@ -160,11 +161,11 @@ export default function Home() {
           />
           <div className="relative flex flex-col items-center justify-between gap-6 text-center sm:flex-row sm:text-left">
             <div>
-              <p className="eyebrow text-sand-600">Limited time</p>
+              <p className="eyebrow text-sand-600">A little sweetness, delivered</p>
               <h3 className="mt-2 font-display text-2xl font-medium text-ink sm:text-3xl">
-                Free shipping over {settings.currency} {settings.free_shipping_threshold}
+                Free shipping over {formatMoney(settings.free_shipping_threshold, settings.currency)}
               </h3>
-              <p className="mt-1 text-sm text-ink/60">On every order across the UAE — pay cash on delivery.</p>
+              <p className="mt-1 text-sm text-ink/60">Freshly prepared and delivered across Pakistan. Pay when your mithai arrives.</p>
             </div>
             <Link to="/shop" className="btn-primary flex-shrink-0">
               Shop now <ArrowRight size={15} />
@@ -177,8 +178,8 @@ export default function Home() {
       <section className="container-store py-8">
         <Reveal className="mb-8 flex items-end justify-between">
           <div>
-            <p className="eyebrow text-palm-600">Just landed</p>
-            <h2 className="mt-2 text-3xl font-medium">New arrivals</h2>
+            <p className="eyebrow text-palm-600">Fresh from our kitchen</p>
+            <h2 className="mt-2 text-3xl font-medium">Made fresh for you</h2>
           </div>
           <Link to="/shop?sort=newest" className="link-underline hidden text-sm font-medium text-palm-600 sm:inline-block">
             View all
@@ -201,8 +202,8 @@ export default function Home() {
       {bestSellers && bestSellers.length > 0 && (
         <section className="container-store py-8 pb-8">
           <Reveal className="mb-8">
-            <p className="eyebrow text-palm-600">Customer favorites</p>
-            <h2 className="mt-2 text-3xl font-medium">Best sellers</h2>
+            <p className="eyebrow text-palm-600">Loved by our customers</p>
+            <h2 className="mt-2 text-3xl font-medium">Most-loved mithai</h2>
           </Reveal>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
             {bestSellers.map((p, i) => (
@@ -218,15 +219,15 @@ export default function Home() {
       <section className="mt-16 bg-ink text-paper">
         <div className="container-store py-20">
           <Reveal className="mb-14 text-center">
-            <p className="eyebrow text-palm-300">How it works</p>
-            <h2 className="mt-2 font-display text-3xl font-medium text-white">Cash on Delivery, made simple</h2>
+            <p className="eyebrow text-palm-300">From our kitchen to your home</p>
+            <h2 className="mt-2 font-display text-3xl font-medium text-white">A sweeter way to celebrate</h2>
           </Reveal>
           <div className="relative grid gap-10 sm:grid-cols-3">
             <div className="absolute left-0 right-0 top-6 hidden h-px bg-white/10 sm:block" />
             {[
-              { n: '01', title: 'Place your order', text: 'Choose your products and check out — no card needed.' },
-              { n: '02', title: 'We prepare & dispatch', text: 'Your order is packed and sent for delivery across the UAE.' },
-              { n: '03', title: 'Pay on delivery', text: 'Pay cash to the courier when your order arrives.' },
+              { n: '01', title: 'Pick your mithai', text: 'Choose your favourites and place your order in a few taps.' },
+              { n: '02', title: 'Made fresh, packed with care', text: 'We prepare your sweets and send them to your doorstep.' },
+              { n: '03', title: 'Pay when it arrives', text: 'Enjoy easy Cash on Delivery across Pakistan.' },
             ].map((step, i) => (
               <Reveal key={step.n} delay={i * 150} className="relative text-center">
                 <div className="relative z-10 mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-ink font-display text-sm text-palm-300">

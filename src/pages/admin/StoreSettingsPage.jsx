@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getStoreSettings, updateStoreSettings } from '../../services/settingsService'
+import { getStoreSettings, normalizeStoreSettings, updateStoreSettings } from '../../services/settingsService'
 import { uploadFile } from '../../services/storageService'
 import { useStoreSettingsRefresh } from '../../contexts/StoreSettingsContext'
 import { useToast } from '../../contexts/ToastContext'
@@ -13,7 +13,7 @@ export default function StoreSettingsPage() {
   const [uploadingFavicon, setUploadingFavicon] = useState(false)
 
   useEffect(() => {
-    getStoreSettings().then(setForm)
+    getStoreSettings().then((settings) => setForm(normalizeStoreSettings(settings)))
   }, [])
 
   function set(field, value) {

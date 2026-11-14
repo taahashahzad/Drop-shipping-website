@@ -7,14 +7,14 @@ import { formatMoney } from '../../utils/format'
 import { placeOrder } from '../../services/orderService'
 import { useToast } from '../../contexts/ToastContext'
 
-const EMIRATES = [
-  'Dubai',
-  'Abu Dhabi',
-  'Sharjah',
-  'Ajman',
-  'Umm Al Quwain',
-  'Ras Al Khaimah',
-  'Fujairah',
+const PROVINCES = [
+  'Punjab',
+  'Sindh',
+  'Khyber Pakhtunkhwa',
+  'Balochistan',
+  'Islamabad Capital Territory',
+  'Gilgit-Baltistan',
+  'Azad Jammu and Kashmir',
 ]
 
 export default function Checkout() {
@@ -31,7 +31,7 @@ export default function Checkout() {
     building: '',
     area: '',
     city: '',
-    emirate: EMIRATES[0],
+    province: PROVINCES[0],
     notes: '',
   })
   const [errors, setErrors] = useState({})
@@ -47,7 +47,9 @@ export default function Checkout() {
   function validate() {
     const e = {}
     if (!form.fullName.trim()) e.fullName = 'Full name is required'
-    if (!/^\+?\d{7,15}$/.test(form.phone.replace(/[\s-]/g, ''))) e.phone = 'Enter a valid phone number'
+    if (!/^(?:(?:\+|00)92|0)?3\d{9}$/.test(form.phone.replace(/[\s-]/g, ''))) {
+      e.phone = 'Enter a valid Pakistan mobile number, e.g. 0300 1234567'
+    }
     if (!form.address.trim()) e.address = 'Address is required'
     if (!form.city.trim()) e.city = 'City is required'
     setErrors(e)
@@ -111,7 +113,7 @@ export default function Checkout() {
               </div>
               <div>
                 <label className="label">Phone number</label>
-                <input className="input" placeholder="971501234567" value={form.phone} onChange={(e) => set('phone', e.target.value)} />
+                <input className="input" type="tel" placeholder="0300 1234567" value={form.phone} onChange={(e) => set('phone', e.target.value)} />
                 {errors.phone && <p className="mt-1 text-xs text-rust-500">{errors.phone}</p>}
               </div>
               <div>
@@ -137,16 +139,16 @@ export default function Checkout() {
                 {errors.city && <p className="mt-1 text-xs text-rust-500">{errors.city}</p>}
               </div>
               <div>
-                <label className="label">Emirate</label>
-                <select className="input" value={form.emirate} onChange={(e) => set('emirate', e.target.value)}>
-                  {EMIRATES.map((em) => (
-                    <option key={em} value={em}>{em}</option>
+                <label className="label">Province / territory</label>
+                <select className="input" value={form.province} onChange={(e) => set('province', e.target.value)}>
+                  {PROVINCES.map((province) => (
+                    <option key={province} value={province}>{province}</option>
                   ))}
                 </select>
               </div>
               <div>
                 <label className="label">Country</label>
-                <input className="input bg-paper-dim" value="United Arab Emirates" disabled />
+                <input className="input bg-paper-dim" value="Pakistan" disabled />
               </div>
               <div className="sm:col-span-2">
                 <label className="label">Delivery notes (optional)</label>

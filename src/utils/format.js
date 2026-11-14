@@ -1,16 +1,17 @@
-export function formatMoney(value, currency = 'AED') {
+export function formatMoney(value, currency = 'PKR') {
   const num = Number(value || 0)
-  return `${currency} ${num.toLocaleString('en-AE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+  const formatted = num.toLocaleString('en-PK', { minimumFractionDigits: 0, maximumFractionDigits: 2 })
+  return currency === 'PKR' ? `Rs ${formatted}` : `${currency} ${formatted}`
 }
 
 export function formatDate(value) {
   if (!value) return ''
-  return new Date(value).toLocaleDateString('en-AE', { year: 'numeric', month: 'short', day: 'numeric' })
+  return new Date(value).toLocaleDateString('en-PK', { year: 'numeric', month: 'short', day: 'numeric' })
 }
 
 export function formatDateTime(value) {
   if (!value) return ''
-  return new Date(value).toLocaleString('en-AE', {
+  return new Date(value).toLocaleString('en-PK', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
